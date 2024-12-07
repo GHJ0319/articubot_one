@@ -40,21 +40,37 @@
         <color rgba="1 0 0 1"/>
     </material>
 
-    <!-- BASE LINK -->
-
-    <link name="base_link">
-
-    </link>
-
     <!-- BASE_FOOTPRINT LINK -->
+     <link name="base_footprint"/>
 
-    <joint name="base_footprint_joint" type="fixed">
-        <parent link="base_link"/>
-        <child link="base_footprint"/>
-        <origin xyz="0 0 1" rpy="0 0 0"/>
-    </joint>
+      <joint name="base_joint" type="fixed">
+        <parent link="base_footprint"/>
+        <child link="base_link" />
+         <origin xyz="0 0 0" rpy="0 0 0"/>
+     </joint>
+     
+     </link>
+     
+    <!-- BASE LINK -->
+    <link name="base_link">
+       <visual>
+        <origin xyz="0 0 0.02"/>
+            <geometry>
+                <box size="0.3 0.25 0.1"/>
+            </geometry>
+      <material name="light_black"/>
+    </visual>
 
-    <link name="base_footprint">
+    <collision>
+      <origin xyz="0 0 0.2"/>
+            <geometry>
+                <box size="${chassis_length} ${chassis_width} ${chassis_height}"/>
+            </geometry>
+    </collision>
+    <xacro:inertial_box mass="0.5" x="${chassis_length}" y="${chassis_width}" z="${chassis_height}">
+            <origin xyz="${chassis_length/2} 0 ${chassis_height/2}" rpy="0 0 0"/>
+    </xacro:inertial_box>
+
     </link>
 
 
@@ -188,7 +204,7 @@
     <joint name="imu_joint" type="fixed">
         <parent link="base_link"/>
         <child link="imu_link"/>
-        <origin xyz="0.0 0 0.068" rpy="0 0 0"/>
+        <origin xyz="0.10 0.05 0.068" rpy="0 0 0"/>
     </joint>
     
     <link name="imu_link"/>
@@ -202,7 +218,6 @@
      </joint>
 
      <link name="gps_link"/>
-
 
     <gazebo reference="caster_wheel">
         <material>Gazebo/White</material>
